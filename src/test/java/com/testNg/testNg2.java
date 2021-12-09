@@ -7,6 +7,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -19,19 +23,24 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.AfterSuite;
 
 public class testNg2 {
+	WebDriver driver;
+	
 	@Test(priority=0)
-	public void ValidateLaunchBrowserGMOonline() {
+	public void ValidateGMOonlineLoadedSuccessfully() {
 		System.out.println("inside ValidateLaunchBrowser");
-		WebDriver driver;
-		/*WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();*/
-		WebDriverManager.edgedriver().setup();
-		driver = new EdgeDriver();
-		driver.get("http://demo.borland.com/gmopost/");
-		driver.manage().window().maximize();
 		String title = driver.getTitle();
 		System.out.println(title);
-		Assert.assertEquals(title, "Welcome to Green Mountain Outpos");
+		Assert.assertEquals(title, "Welcome to Green Mountain Outpost");
+		
+	}
+	
+	@Test(priority=1,dependsOnMethods={"ValidateGMOonlineLoadedSuccessfully"})
+	public void ValidateEnterGMoOnline(){
+		System.out.println("inside ValidateEnterGMoOnline");
+		driver.findElement(By.name("bSubmit")).click();
+		String text = driver.findElement(By.xpath("//h1[contains(text(),'OnLine Catalog')]")).getText();
+		System.out.println(text);
+		Assert.assertEquals(text, "OnLine Catalog");
 	}
 
 	@BeforeMethod
@@ -67,6 +76,14 @@ public class testNg2 {
 	@BeforeSuite
 	public void beforeSuite() {
 		System.out.println("inside beforeSuite");
+		/*WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();*/
+		WebDriverManager.edgedriver().setup();
+		driver = new EdgeDriver();
+		driver.get("http://demo.borland.com/gmopost/");
+		driver.manage().window().maximize();
+		//implicit wait : gloabal waiting mechanism applicable for all web elements
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	@AfterSuite
