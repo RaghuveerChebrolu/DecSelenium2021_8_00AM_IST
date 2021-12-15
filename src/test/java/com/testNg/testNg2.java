@@ -42,6 +42,27 @@ public class testNg2 {
 		System.out.println(text);
 		Assert.assertEquals(text, "OnLine Catalog");
 	}
+	
+	@Test(priority=2, dependsOnMethods={"ValidateEnterGMoOnline"})
+	public void ValidateOrderGlacierSunGlasses(){
+		System.out.println("inside ValidateOrderGlacierSunGlasses");
+		driver.findElement(By.xpath("//input[@name='QTY_BACKPACKS']")).sendKeys("5");
+		driver.findElement(By.name("bSubmit")).click();
+		String Title=driver.getTitle();
+		Assert.assertEquals(Title, "Place Order");
+		String UnitPrice=driver.findElement(By.xpath("//table[@cellpadding='4' and @cellspacing='1']/tbody/tr[2]/td[4]")).getText();
+		System.out.println("UnitPrice: "+UnitPrice);
+		String floatUnitPrice=UnitPrice.substring(2).trim();
+		System.out.println("floatUnitPrice: "+floatUnitPrice);
+		float UnitPrice_FloatValue = Float.parseFloat(floatUnitPrice);
+		float UnitPrice_FloatCalculatedValue = UnitPrice_FloatValue*5;
+		System.out.println("UnitPrice_FloatCalculatedValue:"+UnitPrice_FloatCalculatedValue);
+		String TotalPrice = driver.findElement(By.xpath("//table[@cellpadding='4' and @cellspacing='1']/tbody/tr[2]/td[5]")).getText();
+		float TotalPricefromWebTable = Float.parseFloat(TotalPrice.substring(2).trim());
+		System.out.println("TotalPricefromWebTable:"+TotalPricefromWebTable);
+		Assert.assertEquals(UnitPrice_FloatCalculatedValue, TotalPricefromWebTable);
+	
+	}
 
 	@BeforeMethod
 	public void beforeMethod() {
