@@ -1,6 +1,7 @@
 package com.testNg;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -70,7 +72,44 @@ public class testNg3 {
 		System.out.println("TotalPricefromWebTable:" + TotalPricefromWebTable);
 		Assert.assertEquals(UnitPrice_FloatCalculatedValue, TotalPricefromWebTable);
 	}
-
+	@Test(priority = 3)
+	public void ValidatingAlerts() throws InterruptedException{
+		System.out.println("inside ValidatingAlerts");
+		driver.navigate().to(objProperties.getProperty("AlertURL"));
+		driver.findElement(By.id("alertButton")).click();
+		Alert objAlert1 = driver.switchTo().alert();
+		String Alert1Text = objAlert1.getText();
+		Assert.assertEquals(Alert1Text, objProperties.getProperty("Alert1Text"));
+		objAlert1.accept();
+		
+		driver.findElement(By.id("timerAlertButton")).click();
+		Thread.sleep(5000);
+		Alert objAlert2 = driver.switchTo().alert();
+		String Alert2Text = objAlert2.getText();
+		//Assert.assertEquals(Alert2Text, objProperties.getProperty("Alert2Text"));
+		SoftAssert objSoftAssert = new SoftAssert();
+		objSoftAssert.assertEquals(Alert2Text, objProperties.getProperty("Alert2Text"));
+		objAlert1.accept();
+		
+		driver.findElement(By.id("confirmButton")).click();
+		Alert objAlert3 = driver.switchTo().alert();
+		objAlert3.dismiss();
+		String Alert3Result = driver.findElement(By.id("confirmResult")).getText();
+		objSoftAssert.assertEquals(Alert3Result, objProperties.getProperty("Alert3ResultTextCancel"));
+		
+		driver.findElement(By.id("promtButton")).click();
+		Alert objAlert4 = driver.switchTo().alert();
+		objAlert4.sendKeys(objProperties.getProperty("Alert4Textbox"));
+		objAlert4.accept();
+		String Alert4Result = driver.findElement(By.id("promptResult")).getText();
+		Assert.assertEquals(Alert4Result, objProperties.getProperty("Alert4Result"));
+		
+		driver.navigate().back();
+		Thread.sleep(3000);
+		driver.navigate().forward();
+		objSoftAssert.assertAll();
+	}
+	
 	@BeforeMethod
 	public void beforeMethod() {
 		System.out.println("inside beforeMethod");
