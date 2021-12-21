@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -108,6 +109,24 @@ public class testNg3 {
 		Thread.sleep(3000);
 		driver.navigate().forward();
 		objSoftAssert.assertAll();
+	}
+	
+	@Test(priority=4)
+	public void HandlingFrames(){
+		System.out.println("inside HandlingFrames");
+		driver.navigate().to(objProperties.getProperty("FramesURL"));
+		driver.switchTo().frame("SingleFrame");
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys("inside single frame");
+		driver.switchTo().defaultContent();//VVI -> switch bach to normal DOM from frame 
+		driver.findElement(By.xpath("//a[@href='#Multiple']")).click();
+		
+		WebElement MultipleFrameElement = driver.findElement(By.xpath("//iframe[@src='MultipleFrames.html']"));
+		driver.switchTo().frame(MultipleFrameElement);
+		
+		WebElement SingleFrameElement = driver.findElement(By.xpath("//iframe[@src='SingleFrame.html']"));
+		driver.switchTo().frame(SingleFrameElement);
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys(objProperties.getProperty("framewithInFrame"));
+		driver.switchTo().defaultContent();
 	}
 	
 	@BeforeMethod
