@@ -19,6 +19,8 @@ class Animal1234 {
 	String color = "white";
 }
 
+
+
 class Dog123 extends Animal1234 {
 	String color = "black";
 
