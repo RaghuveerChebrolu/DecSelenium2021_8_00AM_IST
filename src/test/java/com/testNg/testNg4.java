@@ -48,8 +48,9 @@ public class testNg4 extends library_BusinessFunctions {
 	@Test(priority = 1, dependsOnMethods = { "ValidateGMOonlineLoadedSuccessfully" })
 	public void ValidateEnterGMoOnline() {
 		System.out.println("inside ValidateEnterGMoOnline");
-		driver.findElement(By.name(Orep.GmoOnlineSumbmitButton)).click();
-		String text = driver.findElement(By.xpath(Orep.TextGmoOnline)).getText();
+		//driver.findElement(By.name(Orep.GmoOnlineSumbmitButton)).click();
+		library_BusinessFunctions.FindElement(Orep.GmoOnlineSumbmitButton).click();
+		String text = library_BusinessFunctions.FindElement(Orep.TextGmoOnline).getText();
 		System.out.println(text);
 		Assert.assertEquals(text, objProperties.getProperty("GmoOnlineListPageTitle"));
 	}
@@ -154,7 +155,7 @@ public class testNg4 extends library_BusinessFunctions {
 	@BeforeTest
 	public void beforeTest() {
 		System.out.println("inside beforeTest");
-		LaunchBrowser();
+		library_BusinessFunctions.LaunchBrowser();
 	}
 
 	@AfterTest

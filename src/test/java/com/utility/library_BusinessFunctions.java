@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -41,7 +44,7 @@ public class library_BusinessFunctions {
 			WebDriverManager.iedriver().setup();
 			driver = new InternetExplorerDriver();
 			break;
-		case "Chrome":
+		case "chrome":
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
 			break;
@@ -57,5 +60,59 @@ public class library_BusinessFunctions {
 		// implicit wait : gloabal waiting mechanism applicable for all web
 		// elements
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+	
+	public static WebElement FindElement(String OrepLocator){
+		By search=null;
+		System.out.println(OrepLocator); 
+		String locator = OrepLocator.split("&")[0];
+		String value = OrepLocator.split("&")[1];
+		System.out.println(locator);
+		System.out.println(value);
+		if(locator.equals("name")){
+			search=By.name(value);
+		}else if (locator.equals("id")){
+			search=By.id(value);
+		}else if (locator.equals("xpath")){
+			search=By.xpath(value);
+		}else if (locator.equals("tagName")){
+			search=By.tagName(value);
+		}else if (locator.equals("className")){
+			search=By.className(value);
+		}else if (locator.equals("partialLinkText")){
+			search=By.partialLinkText(value);
+		}else if (locator.equals("cssSelector")){
+			search=By.cssSelector(value);
+		}else if (locator.equals("linkText")){
+			search=By.linkText(value);
+		}
+		return driver.findElement(search);
+	}
+	
+	public static List<WebElement> FindElements(String OrepLocator){
+		By search=null;
+		System.out.println(OrepLocator); 
+		String locator = OrepLocator.split("&")[0];
+		String value = OrepLocator.split("&")[1];
+		System.out.println(locator);
+		System.out.println(value);
+		if(locator.equals("name")){
+			search=By.name(value);
+		}else if (locator.equals("id")){
+			search=By.id(value);
+		}else if (locator.equals("xpath")){
+			search=By.xpath(value);
+		}else if (locator.equals("tagName")){
+			search=By.tagName(value);
+		}else if (locator.equals("className")){
+			search=By.className(value);
+		}else if (locator.equals("partialLinkText")){
+			search=By.partialLinkText(value);
+		}else if (locator.equals("cssSelector")){
+			search=By.cssSelector(value);
+		}else if (locator.equals("linkText")){
+			search=By.linkText(value);
+		}
+		return driver.findElements(search);
 	}
 }
