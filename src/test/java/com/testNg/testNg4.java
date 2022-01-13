@@ -17,10 +17,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -50,6 +52,7 @@ public class testNg4 extends library_BusinessFunctions {
 		System.out.println("inside ValidateEnterGMoOnline");
 		//driver.findElement(By.name(Orep.GmoOnlineSumbmitButton)).click();
 		library_BusinessFunctions.FindElement(Orep.GmoOnlineSumbmitButton).click();
+		waitForPageToLoad();
 		String text = library_BusinessFunctions.FindElement(Orep.TextGmoOnline).getText();
 		System.out.println(text);
 		Assert.assertEquals(text, objProperties.getProperty("GmoOnlineListPageTitle"));
@@ -80,6 +83,7 @@ public class testNg4 extends library_BusinessFunctions {
 	public void ValidatingAlerts() throws InterruptedException{
 		System.out.println("inside ValidatingAlerts");
 		driver.navigate().to(objProperties.getProperty("AlertURL"));
+		waitForPageToLoad();
 		driver.findElement(By.id("alertButton")).click();
 		Alert objAlert1 = driver.switchTo().alert();
 		String Alert1Text = objAlert1.getText();
@@ -118,6 +122,7 @@ public class testNg4 extends library_BusinessFunctions {
 	public void HandlingFrames(){
 		System.out.println("inside HandlingFrames");
 		driver.navigate().to(objProperties.getProperty("FramesURL"));
+		waitForPageToLoad();
 		driver.switchTo().frame("SingleFrame");
 		driver.findElement(By.xpath("//input[@type='text']")).sendKeys("inside single frame");
 		driver.switchTo().defaultContent();//VVI -> switch bach to normal DOM from frame 
@@ -130,6 +135,46 @@ public class testNg4 extends library_BusinessFunctions {
 		driver.switchTo().frame(SingleFrameElement);
 		driver.findElement(By.xpath("//input[@type='text']")).sendKeys(objProperties.getProperty("framewithInFrame"));
 		driver.switchTo().defaultContent();
+	}
+	
+	@Test(priority=5)
+	public void VaidateHandlingWindows(){
+		System.out.println("inside VaidateHandlingWindows");
+		driver.navigate().to(objProperties.getProperty("nxtgenaiacademyURL"));
+		waitForPageToLoad();
+		String ParentWindow = driver.getWindowHandle();
+		library_BusinessFunctions.FindElement(Orep.NewBrowserWindow).click();
+		Set<String> Allwindows=driver.getWindowHandles();
+		System.out.println("windpws count:"+Allwindows);
+		for (String IndividualWindow : Allwindows){
+			driver.switchTo().window(IndividualWindow);
+			String title = driver.getTitle();
+			System.out.println("title:"+title);
+			//title:
+			//title:
+			if(title.equals("NxtGen A.I Academy – Learn With Clarity")){
+				JavascriptExecutor js = (JavascriptExecutor)driver;//downcasting
+				js.executeScript("window.scrollBy(0, 1000)");
+				Boolean flag = library_BusinessFunctions.FindElement(Orep.newBrowserWindowTestNgFramework).isEnabled();
+				System.out.println("flag:"+flag);
+				driver.manage().window().maximize();
+				// js.executeScript("window.scrollBy(0,1000)");//To scroll vertically
+				// Down by 1000 pixels
+				// js.executeScript("window.scrollBy(0,-500)");//To scroll vertically Up
+				// by 500 pixels
+				// js.executeScript("window.scrollBy(500,0)");//To scroll horizontally
+				// right by 500 pixels
+				// js.executeScript("window.scrollBy(-500,0)");//To scroll horizontally
+				// left by 500 pixels
+
+				/*WebElement element = library.FindElement(ObjRepository.DoubleCickFrame);
+				js.executeScript("arguments[0].scrollIntoView();", element);*/
+			}else if(title.equals("Demo Site – Multiple Windows – NxtGen A.I Academy")){
+				String numberofvisits = library_BusinessFunctions.FindElement(Orep.nxtgenaiacademyNumberofVisits).getText();
+				System.out.println("numberofvisits:"+numberofvisits);
+			}
+		}
+		
 	}
 	
 	@BeforeMethod
@@ -155,7 +200,7 @@ public class testNg4 extends library_BusinessFunctions {
 	@BeforeTest
 	public void beforeTest() {
 		System.out.println("inside beforeTest");
-		library_BusinessFunctions.LaunchBrowser();
+		LaunchBrowser();
 	}
 
 	@AfterTest
