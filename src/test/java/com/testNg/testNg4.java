@@ -3,7 +3,9 @@ package com.testNg;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+
 import com.utility.Orep;
+
 import com.utility.library_BusinessFunctions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -28,6 +30,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
@@ -175,6 +179,43 @@ public class testNg4 extends library_BusinessFunctions {
 			}
 		}
 		
+	}
+	
+	@Test(priority=6)
+	public void HandlingMouseOpeartions() throws InterruptedException{
+		System.out.println("inside HandlingMouseOpeartions");
+		driver.navigate().to(objProperties.getProperty("mouseOpeartionRightClick"));
+		waitForPageToLoad();
+		Actions objAction = new Actions(driver);
+		WebElement element = library_BusinessFunctions.FindElement(Orep.MouseOpearationRightClick);
+		Thread.sleep(3000);
+		objAction.contextClick(element).build().perform();//right click 
+		WebElement element1 = library_BusinessFunctions.FindElement(Orep.MouseOpearationRightclickCopy);
+		objAction.click(element1).build().perform();
+		Thread.sleep(3000);
+		Alert objAlert= driver.switchTo().alert();
+		String textAlert = objAlert.getText();
+		System.out.println("textAlert:"+textAlert);
+		Assert.assertEquals(textAlert,objProperties.getProperty("mouseOpeartionRightclickCopyActionText") );
+		objAlert.accept();
+		
+		driver.navigate().to(objProperties.getProperty("mouseOpeartionDoubleClick"));
+		waitForPageToLoad();
+		WebElement frameElement = library_BusinessFunctions.FindElement(Orep.MouseOpearationDoubleClickFrame);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].scrollIntoView();", frameElement);
+		driver.switchTo().frame(frameElement);
+		WebElement DoubleClick = library_BusinessFunctions.FindElement(Orep.MouseOpearationDoubleClickbox);
+		objAction.doubleClick(DoubleClick).build().perform();
+		
+
+		Color BackGroundColor = Color
+				.fromString(library_BusinessFunctions.FindElement(Orep.MouseOpearationDoubleClickbox).getCssValue("background-color"));
+		System.out.println("BackGroundColor:" + BackGroundColor);
+		String ActualBackGroundColor = BackGroundColor.asRgba();
+		System.out.println("ActualBackGroundColor:" + ActualBackGroundColor);
+		Assert.assertEquals(ActualBackGroundColor, "rgba(255, 255, 0, 1)");
+		driver.switchTo().defaultContent();
 	}
 	
 	@BeforeMethod

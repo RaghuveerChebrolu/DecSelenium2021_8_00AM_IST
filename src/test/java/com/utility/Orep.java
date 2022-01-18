@@ -8,6 +8,11 @@ public class Orep {
 	public static final String NewBrowserWindow = constants.Name+"&"+"newbrowserwindow123";
 	public static final String newBrowserWindowTestNgFramework = constants.xpath+"&"+"(//span[@class='elementor-button-text'])[3]";
 	public static final String nxtgenaiacademyNumberofVisits = constants.xpath+"&"+"//span[@class='page_counter_text']";
+	public static final String MouseOpearationRightClick = constants.xpath+"&"+"//span[@class='context-menu-one btn btn-neutral']";
+	public static final String MouseOpearationRightclickCopy = constants.xpath+"&"+"(//ul[@class='context-menu-list context-menu-root']/li)[3]";
+	public static final String MouseOpearationDoubleClickFrame = constants.tagName+"&"+"iframe";
+	public static final String MouseOpearationDoubleClickbox = constants.xpath+"&"+"//span[text()='Double click the block']/preceding-sibling::div";
+	
 	
 	
 }
