@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -128,5 +131,16 @@ public class library_BusinessFunctions {
 		// explicit wait -> Applicable for one webElement
 		WebDriverWait wait = new WebDriverWait(driver, 60);//60 seconds 
 		wait.until(pageLoadCondition);
+	}
+	
+	public static void screenShot(){
+		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File destination = new File (System.getProperty("user.dir") + "//src//test//resources//screenShots");
+		try {
+			FileUtils.copyFile(src, destination);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

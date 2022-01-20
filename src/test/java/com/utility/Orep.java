@@ -13,6 +13,10 @@ public class Orep {
 	public static final String MouseOpearationDoubleClickFrame = constants.tagName+"&"+"iframe";
 	public static final String MouseOpearationDoubleClickbox = constants.xpath+"&"+"//span[text()='Double click the block']/preceding-sibling::div";
 	
+	public static final String MouseOpearationDragAndDropFrame = constants.xpath+"&"+"//iframe";
+	public static final String MouseOpearationdrag = constants.ID+"&"+"draggable";
+	public static final String MouseOpearationdrop = constants.ID+"&"+"droppable";
+	
 	
 	
 }

@@ -186,6 +186,7 @@ public class testNg4 extends library_BusinessFunctions {
 		System.out.println("inside HandlingMouseOpeartions");
 		driver.navigate().to(objProperties.getProperty("mouseOpeartionRightClick"));
 		waitForPageToLoad();
+		//right click
 		Actions objAction = new Actions(driver);
 		WebElement element = library_BusinessFunctions.FindElement(Orep.MouseOpearationRightClick);
 		Thread.sleep(3000);
@@ -198,7 +199,9 @@ public class testNg4 extends library_BusinessFunctions {
 		System.out.println("textAlert:"+textAlert);
 		Assert.assertEquals(textAlert,objProperties.getProperty("mouseOpeartionRightclickCopyActionText") );
 		objAlert.accept();
+		library_BusinessFunctions.screenShot();
 		
+		//doube click
 		driver.navigate().to(objProperties.getProperty("mouseOpeartionDoubleClick"));
 		waitForPageToLoad();
 		WebElement frameElement = library_BusinessFunctions.FindElement(Orep.MouseOpearationDoubleClickFrame);
@@ -208,7 +211,6 @@ public class testNg4 extends library_BusinessFunctions {
 		WebElement DoubleClick = library_BusinessFunctions.FindElement(Orep.MouseOpearationDoubleClickbox);
 		objAction.doubleClick(DoubleClick).build().perform();
 		
-
 		Color BackGroundColor = Color
 				.fromString(library_BusinessFunctions.FindElement(Orep.MouseOpearationDoubleClickbox).getCssValue("background-color"));
 		System.out.println("BackGroundColor:" + BackGroundColor);
@@ -216,6 +218,19 @@ public class testNg4 extends library_BusinessFunctions {
 		System.out.println("ActualBackGroundColor:" + ActualBackGroundColor);
 		Assert.assertEquals(ActualBackGroundColor, "rgba(255, 255, 0, 1)");
 		driver.switchTo().defaultContent();
+		library_BusinessFunctions.screenShot();
+		
+		//drag and drop
+		driver.navigate().to(objProperties.getProperty("mouseOperationDragAndDrop"));
+		waitForPageToLoad();
+		WebElement frameElement2 = library_BusinessFunctions.FindElement(Orep.MouseOpearationDragAndDropFrame);
+		driver.switchTo().frame(frameElement2);
+		WebElement drag = library_BusinessFunctions.FindElement(Orep.MouseOpearationdrag);
+		WebElement drop = library_BusinessFunctions.FindElement(Orep.MouseOpearationdrop);
+		//objAction.dragAndDrop(drag, drop).build().perform();
+		objAction.clickAndHold(drag);
+		objAction.moveToElement(drop).build().perform();
+		library_BusinessFunctions.screenShot();
 	}
 	
 	@BeforeMethod
