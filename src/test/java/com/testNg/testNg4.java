@@ -5,7 +5,7 @@ import org.testng.asserts.SoftAssert;
 
 
 import com.utility.Orep;
-
+import com.utility.constants;
 import com.utility.library_BusinessFunctions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -157,8 +157,9 @@ public class testNg4 extends library_BusinessFunctions {
 			//title:
 			//title:
 			if(title.equals("NxtGen A.I Academy – Learn With Clarity")){
-				JavascriptExecutor js = (JavascriptExecutor)driver;//downcasting
-				js.executeScript("window.scrollBy(0, 1000)");
+				//JavascriptExecutor js = (JavascriptExecutor)driver;//downcasting
+				//js.executeScript("window.scrollBy(0, 1000)");
+				library_BusinessFunctions.ScrollDown(constants.NxtGenAIAcademy);
 				Boolean flag = library_BusinessFunctions.FindElement(Orep.newBrowserWindowTestNgFramework).isEnabled();
 				System.out.println("flag:"+flag);
 				driver.manage().window().maximize();
@@ -231,6 +232,15 @@ public class testNg4 extends library_BusinessFunctions {
 		objAction.clickAndHold(drag);
 		objAction.moveToElement(drop).build().perform();
 		library_BusinessFunctions.screenShot();
+	}
+	
+	@Test(priority=7)
+	public void HandlingWebTable(){
+		System.out.println("inside HandlingMouseOpeartions");
+		driver.navigate().to(objProperties.getProperty("WebTableURL"));
+		waitForPageToLoad();
+		library_BusinessFunctions.ScrollDown(constants.Webtable);
+		
 	}
 	
 	@BeforeMethod
