@@ -16,6 +16,10 @@ public class Orep {
 	public static final String MouseOpearationDragAndDropFrame = constants.xpath+"&"+"//iframe";
 	public static final String MouseOpearationdrag = constants.ID+"&"+"draggable";
 	public static final String MouseOpearationdrop = constants.ID+"&"+"droppable";
+	public static final String WebTableLastNames = constants.xpath+"&"+"//table[@id='example']/tbody/tr/td[3]";
+	
+	
+	
 	
 	
 	

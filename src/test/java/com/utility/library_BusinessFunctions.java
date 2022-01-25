@@ -23,12 +23,46 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class library_BusinessFunctions {
 	public static WebDriver driver;
 	public static Properties objProperties = new Properties();
+	public static ExtentHtmlReporter extent_HtmlReporter ;
+	public static ExtentReports extent_Reports;
+	public static ExtentTest extent_Test;
+	
+	/*ExtentHtmlReporter    : responsible for look and feel of the report ,we can specify the report name , 
+	document title , theme of the report 
 
+	ExtentReports : used to create entries in your report , create test cases in report , 
+	who executed the test case, environment name , browser 
+
+	ExtentTest : update pass fail and skips and logs  the test cases results*/
+
+
+	public static void StartExtentReport(){
+		extent_HtmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +
+				"//test-output//ExtentReport4.html");
+		extent_HtmlReporter.config().setDocumentTitle("Automation Report"); // Tile of report
+		extent_HtmlReporter.config().setReportName("Functional and Regression Testing"); // Name of the report
+		extent_HtmlReporter.config().setTheme(Theme.STANDARD);
+		
+		extent_Reports = new ExtentReports();
+		extent_Reports.attachReporter(extent_HtmlReporter);
+		
+		// Passing General information
+		extent_Reports.setSystemInfo("Host name", "localhost Raghu");
+		extent_Reports.setSystemInfo("Environemnt", "QA SIT");
+		extent_Reports.setSystemInfo("user", "Raghu");
+		
+	}
+	
 	public static void ReadPropertyFile() throws IOException {
 		System.out.println(System.getProperty("user.dir"));
 		File objFile = new File(
@@ -135,16 +169,29 @@ public class library_BusinessFunctions {
 		wait.until(pageLoadCondition);
 	}
 
-	public static void screenShot() {
+	public static String screenShot() {
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String dateName = new SimpleDateFormat("yyyyMMDDhhmmss").format(new Date());
-		File destination = new File(System.getProperty("user.dir") + "//ScreenShots//" + dateName + "captured.png");
+		String destination = System.getProperty("user.dir") + "//ScreenShots//" + dateName + "captured.png";
 		try {
-			FileUtils.copyFile(src, destination);
+			FileUtils.copyFile(src, new File(destination));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return destination;
+	}
+	
+	
+	public static String screenShot(String testCaseName) throws Exception {
+		File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		//String dateName = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(new Date());
+		String dateName = new SimpleDateFormat("yyyyMMDDhhmmss").format(new Date());
+		System.out.println(dateName);
+		String destination = System.getProperty("user.dir") + "//screenshots//" + dateName +testCaseName
+				+ "captured.png";
+		FileUtils.copyFile(source, new File(destination));
+		return destination;
 	}
 
 	public static void ScrollDown(int Yaxis) {
