@@ -345,6 +345,32 @@ public class testNg4 extends library_BusinessFunctions {
 		objRobot.keyRelease(KeyEvent.VK_ENTER);
 		
 	}
+	
+	
+	@Test(priority=9)
+	public void FileDownload() throws InterruptedException{
+		System.out.println("inside FileDownload");
+		//extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
+		waitForPageToLoad();
+		driver.navigate().to(objProperties.getProperty("FileDownload"));
+		waitForPageToLoad();
+		library_BusinessFunctions.FindElement(Orep.FileDownload500kb).click();
+		Thread.sleep(30000);
+		File objFile = new File(System.getProperty("user.dir"));
+		File[] AllFiles = objFile.listFiles();
+		Boolean fileFound = false;
+		File obj_File = null;
+		for(File IndividualFile:AllFiles){
+			String FileName = IndividualFile.getName();
+			System.out.println("FileName:"+FileName);
+			if(FileName.contains("file-sample")){
+				fileFound=true;
+				obj_File = new File(FileName);
+			}
+		}
+		Assert.assertTrue(fileFound, "Downloaded File Not Found");
+		obj_File.deleteOnExit();
+	}
 
 	@BeforeMethod
 	public void beforeMethod() {
