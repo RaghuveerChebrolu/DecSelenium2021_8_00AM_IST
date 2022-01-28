@@ -22,6 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -115,6 +116,33 @@ public class library_BusinessFunctions {
 		// elements
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
+	
+	public static WebElement FindElementUnitDriver(WebDriver unitdriver,String OrepLocator) {
+		By search = null;
+		System.out.println(OrepLocator);
+		String locator = OrepLocator.split("&")[0];
+		String value = OrepLocator.split("&")[1];
+		System.out.println(locator);
+		System.out.println(value);
+		if (locator.equals("name")) {
+			search = By.name(value);
+		} else if (locator.equals("id")) {
+			search = By.id(value);
+		} else if (locator.equals("xpath")) {
+			search = By.xpath(value);
+		} else if (locator.equals("tagName")) {
+			search = By.tagName(value);
+		} else if (locator.equals("className")) {
+			search = By.className(value);
+		} else if (locator.equals("partialLinkText")) {
+			search = By.partialLinkText(value);
+		} else if (locator.equals("cssSelector")) {
+			search = By.cssSelector(value);
+		} else if (locator.equals("linkText")) {
+			search = By.linkText(value);
+		}
+		return unitdriver.findElement(search);
+	}
 
 	public static WebElement FindElement(String OrepLocator) {
 		By search = null;
@@ -181,6 +209,19 @@ public class library_BusinessFunctions {
 		wait.until(pageLoadCondition);
 	}
 
+	public static String screenShot(HtmlUnitDriver unitDriver ) {
+		File src = ((TakesScreenshot) unitDriver).getScreenshotAs(OutputType.FILE);
+		String dateName = new SimpleDateFormat("yyyyMMDDhhmmss").format(new Date());
+		String destination = System.getProperty("user.dir") + "//ScreenShots//" + dateName + "captured.png";
+		try {
+			FileUtils.copyFile(src, new File(destination));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return destination;
+	}
+	
 	public static String screenShot() {
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		String dateName = new SimpleDateFormat("yyyyMMDDhhmmss").format(new Date());
