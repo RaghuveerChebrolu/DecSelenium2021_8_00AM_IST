@@ -408,6 +408,7 @@ public class testNg4 extends library_BusinessFunctions {
 
 	@BeforeClass
 	public void beforeClass() {
+		library_BusinessFunctions.StartExtentReport();
 		System.out.println("inside beforeClass");
 	}
 

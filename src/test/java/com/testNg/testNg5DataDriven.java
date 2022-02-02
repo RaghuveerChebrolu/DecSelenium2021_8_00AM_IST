@@ -74,7 +74,7 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 			System.out.println("Rows:"+Rows);
 			for(int RowNumber = 1; RowNumber<=Rows ; RowNumber++){
 				testDataMap = ReadExcelFile(objXSSFSheet,RowNumber);
-				System.out.println("----------------------------");
+				/*System.out.println("----------------------------");
 				System.out.println(testDataMap.get("RunMode"));
 				System.out.println(testDataMap.get("TestCaseName"));
 				System.out.println(testDataMap.get("FirstName"));
@@ -90,7 +90,63 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 				System.out.println(testDataMap.get("DOB_MM"));
 				System.out.println(testDataMap.get("Password"));
 				System.out.println(testDataMap.get("confirm Password"));
-				System.out.println("$$$$$$$$$$$$$$$$$$$$$$");
+				System.out.println("$$$$$$$$$$$$$$$$$$$$$$");*/
+				
+				if(testDataMap.get("RunMode").equals("Yes")){
+					library_BusinessFunctions.FindElement(Orep.DataDrivenFirstName).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDrivenFirstName).sendKeys(testDataMap.get("FirstName"));
+					
+					library_BusinessFunctions.FindElement(Orep.DataDrivenLastName).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDrivenLastName).sendKeys(testDataMap.get("LastName"));
+					
+					library_BusinessFunctions.FindElement(Orep.DataDrivenAddress).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDrivenAddress).sendKeys(testDataMap.get("Address"));
+					
+					library_BusinessFunctions.FindElement(Orep.DataDrivenEmail).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDrivenEmail).sendKeys(testDataMap.get("Email Address"));
+					
+					//library_BusinessFunctions.FindElement(Orep.DataDrivenPhone).clear();
+					//library_BusinessFunctions.FindElement(Orep.DataDrivenPhone).sendKeys(testDataMap.get("PhoneNumber"));
+					
+					if(testDataMap.get("Gender").equalsIgnoreCase("male")){
+						library_BusinessFunctions.FindElement(Orep.DataDrivenGenderMale).click();
+					}else {
+						library_BusinessFunctions.FindElement(Orep.DataDrivenGenderFemale).click();
+					}
+					
+					String hobbies = testDataMap.get("Hobbies");
+					//Cricket & Hockey
+					String[] AllHobbies = hobbies.split("&");
+					for(String hobby :AllHobbies ){
+						if(hobby.equalsIgnoreCase("cricket")){
+							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).click();
+						}else if(hobby.equalsIgnoreCase("movies")){
+							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).click();
+						}else if (hobby.equalsIgnoreCase("hockey")){
+							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
+						}
+					}
+					
+					
+					
+					/*if(testDataMap.get("Hobbies").equalsIgnoreCase("cricket")){
+						library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).click();
+					}else if(testDataMap.get("Hobbies").equalsIgnoreCase("movies")){
+						library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).click();
+					}else if (testDataMap.get("Hobbies").equalsIgnoreCase("hockey")){
+						library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
+					}*/
+					
+					
+					
+				}else {
+					System.out.println("RunMode in test data excel file is not marked as Yes for row number :"+RowNumber+1);
+				}
+				
+				
+				
+
+				
 			}
 			
 			

@@ -12,31 +12,30 @@ import org.testng.annotations.Test;
 import com.utility.Orep;
 import com.utility.library_BusinessFunctions;
 
-public class HeadLessBrowser extends library_BusinessFunctions{
-	//HtmlUnitDriver unitDriver;
-	public static WebDriver unitDriver =  new HtmlUnitDriver();
+public class HeadLessBrowserHtmlUnitDriver extends library_BusinessFunctions{
+	//HtmlUnitDriver driver;
+	public static WebDriver driver =  new HtmlUnitDriver(true);
 	@Test(priority = 0)
 	public void testingHeadlessUsingHtmlUnitDriver() throws IOException{
-		//unitDriver = new HtmlUnitDriver();
+		//driver = new HtmlUnitDriver();
 		ReadPropertyFile();
-		unitDriver.get(objProperties.getProperty("GMOonlineURL"));
-		unitDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		String title = unitDriver.getTitle();
+		driver.get(objProperties.getProperty("GMOonlineURL"));
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		String title = driver.getTitle();
 		System.out.println("title:"+title);
 		Assert.assertEquals(title, objProperties.getProperty("GMO_onlineTitle"));
-		library_BusinessFunctions.FindElementUnitDriver(unitDriver,Orep.GmoOnlineSumbmitButton).click();
-		//library_BusinessFunctions.screenShot(unitDriver);
+		//library_BusinessFunctions.FindElementUnitDriver(driver,Orep.GmoOnlineSumbmitButton).click();
+		//library_BusinessFunctions.screenShot(driver);
 	}
 	
 	@Test(priority = 1, dependsOnMethods = { "testingHeadlessUsingHtmlUnitDriver" })
 	public void ValidateEnterGMoOnline() {
 		System.out.println("inside ValidateEnterGMoOnline");
 		//extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
-		unitDriver.findElement(By.name(Orep.GmoOnlineSumbmitButton)).click();
-		//library_BusinessFunctions.FindElementUnitDriver(unitDriver,Orep.GmoOnlineSumbmitButton).click();
-		waitForPageToLoad();
-		String text = driver.findElement(By.xpath(Orep.TextGmoOnline)).getText();
-		//String text = library_BusinessFunctions.FindElementUnitDriver(unitDriver,Orep.TextGmoOnline).getText();
+		library_BusinessFunctions.FindElementUnitDriver(driver,Orep.GmoOnlineSumbmitButton).click();
+		//waitForPageToLoad();
+		//String text = driver.findElement(By.xpath(Orep.TextGmoOnline)).getText();
+		String text = library_BusinessFunctions.FindElementUnitDriver(driver,Orep.TextGmoOnline).getText();
 		System.out.println(text);
 		Assert.assertEquals(text, objProperties.getProperty("GmoOnlineListPageTitle"));
 	}
@@ -44,19 +43,21 @@ public class HeadLessBrowser extends library_BusinessFunctions{
 	@Test(priority = 2, dependsOnMethods = { "ValidateEnterGMoOnline" })
 	public void ValidateOrderGlacierSunGlasses() {
 		System.out.println("inside ValidateOrderGlacierSunGlasses");
-		extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
-		unitDriver.findElement(By.xpath(Orep.QTY_BACKPACKS)).sendKeys(objProperties.getProperty("QTY_BACKPACKS"));
-		unitDriver.findElement(By.name(Orep.GmoOnlineSumbmitButton)).click();
-		String Title = unitDriver.getTitle();
+		//extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
+		//driver.findElement(By.xpath(Orep.QTY_BACKPACKS)).sendKeys(objProperties.getProperty("QTY_BACKPACKS"));
+		//driver.findElement(By.name(Orep.GmoOnlineSumbmitButton)).click();
+		library_BusinessFunctions.FindElementUnitDriver(driver,Orep.QTY_BACKPACKS).sendKeys(objProperties.getProperty("QTY_BACKPACKS"));
+		library_BusinessFunctions.FindElementUnitDriver(driver,Orep.GmoOnlineSumbmitButton).click();
+		String Title = driver.getTitle();
 		Assert.assertEquals(Title, objProperties.getProperty("GMOonlinePlaceOrderTitle"));
-		String UnitPrice = unitDriver.findElement(By.xpath(Orep.UnitPrice)).getText();
+		String UnitPrice = library_BusinessFunctions.FindElementUnitDriver(driver,Orep.UnitPrice).getText();
 		System.out.println("UnitPrice: " + UnitPrice);
 		String floatUnitPrice = UnitPrice.substring(2).trim();
 		System.out.println("floatUnitPrice: " + floatUnitPrice);
 		float UnitPrice_FloatValue = Float.parseFloat(floatUnitPrice);
 		float UnitPrice_FloatCalculatedValue = UnitPrice_FloatValue * 5;
 		System.out.println("UnitPrice_FloatCalculatedValue:" + UnitPrice_FloatCalculatedValue);
-		String TotalPrice = unitDriver
+		String TotalPrice = driver
 				.findElement(By.xpath("//table[@cellpadding='4' and @cellspacing='1']/tbody/tr[2]/td[5]")).getText();
 		float TotalPricefromWebTable = Float.parseFloat(TotalPrice.substring(2).trim());
 		System.out.println("TotalPricefromWebTable:" + TotalPricefromWebTable);

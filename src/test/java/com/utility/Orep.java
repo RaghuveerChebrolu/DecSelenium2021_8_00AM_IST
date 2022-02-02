@@ -20,6 +20,31 @@ public class Orep {
 	public static final String FileUploadBrowseButton = constants.xpath+"&"+"//input[@id='input-4']/preceding-sibling::span";
 	public static final String FileDownload500kb = constants.xpath+"&"+"//a[@download='file-sample_500kB.doc']";
 	
+	//Data Driven 
+	public static final String DataDrivenFirstName = constants.xpath+"&"+"//input[@placeholder='First Name']";
+	public static final String DataDrivenLastName = constants.xpath+"&"+"//input[@placeholder='Last Name']";
+	public static final String DataDrivenAddress = constants.xpath+"&"+"//textarea[@ng-model='Adress']";
+	public static final String DataDrivenEmail = constants.xpath+"&"+"//input[@ng-model='EmailAdress']";
+	public static final String DataDrivenPhone = constants.xpath+"&"+"//input[@ng-model='Phone']";
+	public static final String DataDrivenGenderMale = constants.xpath+"&"+"//input[@value='Male']";
+	public static final String DataDrivenGenderFemale = constants.xpath+"&"+"//input[@value='FeMale']";
+	public static final String DataDrivenHobbiesCricket = constants.ID+"&"+"checkbox1";
+	public static final String DataDrivenHobbiesMovies = constants.ID+"&"+"checkbox2";
+	public static final String DataDrivenHobbiesHockey = constants.ID+"&"+"checkbox3";
+	public static final String DataDrivenLanguages = constants.ID+"&"+"msdd";
+	public static final String DataDrivenAllLanguages = constants.xpath+"&"+"//div[@id='msdd']/following-sibling::div/ul/li/a";
+	public static final String DataDrivenSkillsField = constants.xpath+"&"+"//label[contains(text(),'Skills')]";
+	public static final String DataDrivenCountries = constants.ID+"&"+"countries";
+	
+	//span[@role='combobox']
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
