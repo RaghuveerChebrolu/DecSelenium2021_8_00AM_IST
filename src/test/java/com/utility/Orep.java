@@ -35,8 +35,22 @@ public class Orep {
 	public static final String DataDrivenAllLanguages = constants.xpath+"&"+"//div[@id='msdd']/following-sibling::div/ul/li/a";
 	public static final String DataDrivenSkillsField = constants.xpath+"&"+"//label[contains(text(),'Skills')]";
 	public static final String DataDrivenCountries = constants.ID+"&"+"countries";
+	public static final String DataDriven_Skills = constants.ID+"&"+"Skills";
+	public static final String DataDriven_AllSkills = constants.xpath+"&"+"//select[@id='Skills']/option";
+	public static final String DataDrivenSelectCountry = constants.xpath+"&"+"//span[@role='combobox']";
+	public static final String DataDrivenTextBoxSelectCountry = constants.xpath+"&"+"//input[@type='search']";
+	public static final String DataDriven_DOB_YY = constants.ID+"&"+"yearbox";
+	public static final String DataDriven_ALLYearsDOB_YY = constants.xpath+"&"+"//select[@id='yearbox']/option";
+	public static final String DataDriven_DOB_MM = constants.xpath+"&"+"//select[@placeholder='Month']";
+	public static final String DataDriven_ALLMonthsDOB_YY = constants.xpath+"&"+"//select[@placeholder='Month']/option";
+	public static final String DataDriven_DOB_DD = constants.xpath+"&"+"//select[@placeholder='Day']";
+	public static final String DataDriven_ALLDaysDOB_YY = constants.xpath+"&"+"//select[@placeholder='Day']/option";
 	
-	//span[@role='combobox']
+	
+	
+	
+	
+	
 	
 	
 	

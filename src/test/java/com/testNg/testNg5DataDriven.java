@@ -33,6 +33,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.Alert;
@@ -94,27 +95,27 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 				
 				if(testDataMap.get("RunMode").equals("Yes")){
 					library_BusinessFunctions.FindElement(Orep.DataDrivenFirstName).clear();
-					library_BusinessFunctions.FindElement(Orep.DataDrivenFirstName).sendKeys(testDataMap.get("FirstName"));
+					library_BusinessFunctions.FindElement(Orep.DataDrivenFirstName).sendKeys(testDataMap.get("FirstName").trim());
 					
 					library_BusinessFunctions.FindElement(Orep.DataDrivenLastName).clear();
-					library_BusinessFunctions.FindElement(Orep.DataDrivenLastName).sendKeys(testDataMap.get("LastName"));
+					library_BusinessFunctions.FindElement(Orep.DataDrivenLastName).sendKeys(testDataMap.get("LastName").trim());
 					
 					library_BusinessFunctions.FindElement(Orep.DataDrivenAddress).clear();
-					library_BusinessFunctions.FindElement(Orep.DataDrivenAddress).sendKeys(testDataMap.get("Address"));
+					library_BusinessFunctions.FindElement(Orep.DataDrivenAddress).sendKeys(testDataMap.get("Address").trim());
 					
 					library_BusinessFunctions.FindElement(Orep.DataDrivenEmail).clear();
-					library_BusinessFunctions.FindElement(Orep.DataDrivenEmail).sendKeys(testDataMap.get("Email Address"));
+					library_BusinessFunctions.FindElement(Orep.DataDrivenEmail).sendKeys(testDataMap.get("Email Address").trim());
 					
-					//library_BusinessFunctions.FindElement(Orep.DataDrivenPhone).clear();
-					//library_BusinessFunctions.FindElement(Orep.DataDrivenPhone).sendKeys(testDataMap.get("PhoneNumber"));
+					library_BusinessFunctions.FindElement(Orep.DataDrivenPhone).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDrivenPhone).sendKeys(testDataMap.get("PhoneNumber").trim());
 					
-					if(testDataMap.get("Gender").equalsIgnoreCase("male")){
+					if(testDataMap.get("Gender").trim().equalsIgnoreCase("male")){
 						library_BusinessFunctions.FindElement(Orep.DataDrivenGenderMale).click();
 					}else {
 						library_BusinessFunctions.FindElement(Orep.DataDrivenGenderFemale).click();
 					}
 					
-					String hobbies = testDataMap.get("Hobbies");
+					String hobbies = testDataMap.get("Hobbies").trim();
 					//Cricket & Hockey
 					String[] AllHobbies = hobbies.split("&");
 					for(String hobby :AllHobbies ){
@@ -126,21 +127,18 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
 						}
 					}
+					library_BusinessFunctions.FindElement(Orep.DataDrivenLanguages).click();
+					List<WebElement> AllLanguages =library_BusinessFunctions.FindElements(Orep.DataDrivenAllLanguages);
 					
+					SelectValueFromDropDown(AllLanguages,testDataMap.get("Languages").trim());
+					library_BusinessFunctions.FindElement(Orep.DataDrivenSkillsField).click();
 					
-					
-					/*if(testDataMap.get("Hobbies").equalsIgnoreCase("cricket")){
-						library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).click();
-					}else if(testDataMap.get("Hobbies").equalsIgnoreCase("movies")){
-						library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).click();
-					}else if (testDataMap.get("Hobbies").equalsIgnoreCase("hockey")){
-						library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
-					}*/
 					
 					
 					
 				}else {
-					System.out.println("RunMode in test data excel file is not marked as Yes for row number :"+RowNumber+1);
+					 RowNumber = RowNumber+1;
+					System.out.println("RunMode in test data excel file is not marked as Yes for row number :"+RowNumber);
 				}
 				
 				
@@ -161,22 +159,23 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 
 	public HashMap<String, String> ReadExcelFile(XSSFSheet objXSSFSheet, int rowNumber) {
 		// TODO Auto-generated method stub
+		DataFormatter ObjFormatter = new DataFormatter();
 		testDataMap.put("RunMode", objXSSFSheet.getRow(rowNumber).getCell(0).getStringCellValue());
 		testDataMap.put("TestCaseName", objXSSFSheet.getRow(rowNumber).getCell(1).getStringCellValue());
 		testDataMap.put("FirstName", objXSSFSheet.getRow(rowNumber).getCell(2).getStringCellValue());
 		testDataMap.put("LastName", objXSSFSheet.getRow(rowNumber).getCell(3).getStringCellValue());
 		testDataMap.put("Address", objXSSFSheet.getRow(rowNumber).getCell(4).getStringCellValue());
 		testDataMap.put("Email Address", objXSSFSheet.getRow(rowNumber).getCell(5).getStringCellValue());
-		//testDataMap.put("PhoneNumber", objXSSFSheet.getRow(rowNumber).getCell(6).getStringCellValue());
+		testDataMap.put("PhoneNumber", ObjFormatter.formatCellValue(objXSSFSheet.getRow(rowNumber).getCell(6)));
 		testDataMap.put("Gender", objXSSFSheet.getRow(rowNumber).getCell(7).getStringCellValue());
 		testDataMap.put("Hobbies", objXSSFSheet.getRow(rowNumber).getCell(8).getStringCellValue());
 		testDataMap.put("Languages", objXSSFSheet.getRow(rowNumber).getCell(9).getStringCellValue());
 		testDataMap.put("Skills", objXSSFSheet.getRow(rowNumber).getCell(10).getStringCellValue());
 		testDataMap.put("Country", objXSSFSheet.getRow(rowNumber).getCell(11).getStringCellValue());
 		testDataMap.put("SelectCountry", objXSSFSheet.getRow(rowNumber).getCell(12).getStringCellValue());
-		//testDataMap.put("DOB_YY", objXSSFSheet.getRow(rowNumber).getCell(13).getStringCellValue());
+		testDataMap.put("DOB_YY", ObjFormatter.formatCellValue(objXSSFSheet.getRow(rowNumber).getCell(13)));
 		testDataMap.put("DOB_MM", objXSSFSheet.getRow(rowNumber).getCell(14).getStringCellValue());
-		//testDataMap.put("DOB_DD", objXSSFSheet.getRow(rowNumber).getCell(15).getStringCellValue());
+		testDataMap.put("DOB_DD",ObjFormatter.formatCellValue(objXSSFSheet.getRow(rowNumber).getCell(15)));
 		testDataMap.put("Password", objXSSFSheet.getRow(rowNumber).getCell(16).getStringCellValue());
 		testDataMap.put("confirm Password", objXSSFSheet.getRow(rowNumber).getCell(17).getStringCellValue());	
 		return testDataMap;
