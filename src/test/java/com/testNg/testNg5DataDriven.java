@@ -60,7 +60,7 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 	@Test(priority=9)
 	public void DataDriven() throws InterruptedException, IOException{
 		System.out.println("inside DataDriven");
-		//extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
+		extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
 		driver.navigate().to(objProperties.getProperty("AutomationRegister"));
 		waitForPageToLoad();
 		try {
@@ -115,34 +115,91 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 						library_BusinessFunctions.FindElement(Orep.DataDrivenGenderFemale).click();
 					}
 					
-					String hobbies = testDataMap.get("Hobbies").trim();
-					//Cricket & Hockey
-					String[] AllHobbies = hobbies.split("&");
-					for(String hobby :AllHobbies ){
-						if(hobby.equalsIgnoreCase("cricket")){
+					
+					if(RowNumber>1){
+						Boolean cricket = library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).isSelected();
+						if(cricket==true){
 							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).click();
-						}else if(hobby.equalsIgnoreCase("movies")){
+						}
+						Boolean movies = library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).isSelected();
+						if(movies==true){
 							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).click();
-						}else if (hobby.equalsIgnoreCase("hockey")){
+						}
+						Boolean hockey = library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).isSelected();
+						if(hockey==true){
 							library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
 						}
+						String hobbies = testDataMap.get("Hobbies").trim();
+						//Cricket & Hockey
+						String[] AllHobbies = hobbies.split("&");
+						for(String hobby :AllHobbies ){
+							if(hobby.equalsIgnoreCase("cricket")){
+								library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).click();
+							}else if(hobby.equalsIgnoreCase("movies")){
+								library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).click();
+							}else if (hobby.equalsIgnoreCase("hockey")){
+								library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
+							}
+						}
+					}else{
+						String hobbies = testDataMap.get("Hobbies").trim();
+						//Cricket & Hockey
+						String[] AllHobbies = hobbies.split("&");
+						for(String hobby :AllHobbies ){
+							if(hobby.equalsIgnoreCase("cricket")){
+								library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesCricket).click();
+							}else if(hobby.equalsIgnoreCase("movies")){
+								library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesMovies).click();
+							}else if (hobby.equalsIgnoreCase("hockey")){
+								library_BusinessFunctions.FindElement(Orep.DataDrivenHobbiesHockey).click();
+							}
+						}
 					}
+					
+					ScrollDown(500);
+					
+					if(RowNumber>1){
+						library_BusinessFunctions.FindElement(Orep.DataDrivenCloseIconLanguages).click();
+					}
+					
 					library_BusinessFunctions.FindElement(Orep.DataDrivenLanguages).click();
 					List<WebElement> AllLanguages =library_BusinessFunctions.FindElements(Orep.DataDrivenAllLanguages);
-					
 					SelectValueFromDropDown(AllLanguages,testDataMap.get("Languages").trim());
+					
 					library_BusinessFunctions.FindElement(Orep.DataDrivenSkillsField).click();
 					
+					library_BusinessFunctions.FindElement(Orep.DataDriven_Skills).click();
+					List<WebElement> AllSkills =library_BusinessFunctions.FindElements(Orep.DataDriven_AllSkills);
+					SelectValueFromDropDown(AllSkills,testDataMap.get("Skills").trim());
 					
+					library_BusinessFunctions.FindElement(Orep.DataDrivenSelectCountry).click();
+					library_BusinessFunctions.FindElement(Orep.DataDrivenTextBoxSelectCountry).sendKeys(testDataMap.get("SelectCountry"));
+					
+					PressEnterKey();
+					
+					library_BusinessFunctions.FindElement(Orep.DataDriven_DOB_YY).click();
+					List<WebElement> AllYears =library_BusinessFunctions.FindElements(Orep.DataDriven_ALLYearsDOB_YY);
+					SelectValueFromDropDown(AllYears,testDataMap.get("DOB_YY").trim());
+					
+					library_BusinessFunctions.FindElement(Orep.DataDriven_DOB_MM).click();
+					List<WebElement> AllMonths =library_BusinessFunctions.FindElements(Orep.DataDriven_ALLMonthsDOB_MM);
+					SelectValueFromDropDown(AllMonths,testDataMap.get("DOB_MM").trim());
+					
+					library_BusinessFunctions.FindElement(Orep.DataDriven_DOB_DD).click();
+					List<WebElement> AllDays =library_BusinessFunctions.FindElements(Orep.DataDriven_ALLDaysDOB_DD);
+					SelectValueFromDropDown(AllDays,testDataMap.get("DOB_DD").trim());
+					
+					library_BusinessFunctions.FindElement(Orep.DataDriven_Pwd).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDriven_Pwd).sendKeys(testDataMap.get("Password"));
+					
+					library_BusinessFunctions.FindElement(Orep.DataDriven_ConfirmPWD).clear();
+					library_BusinessFunctions.FindElement(Orep.DataDriven_ConfirmPWD).sendKeys(testDataMap.get("confirm Password"));
 					
 					
 				}else {
-					 RowNumber = RowNumber+1;
-					System.out.println("RunMode in test data excel file is not marked as Yes for row number :"+RowNumber);
+					 int count = RowNumber+1;
+					System.out.println("RunMode in test data excel file is not marked as Yes for row number :"+count);
 				}
-				
-				
-				
 
 				
 			}
@@ -218,6 +275,7 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 	@BeforeClass
 	public void beforeClass() {
 		System.out.println("inside beforeClass");
+		library_BusinessFunctions.StartExtentReport();
 	}
 
 	@AfterClass

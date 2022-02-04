@@ -1,5 +1,8 @@
 package com.utility;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,6 +43,8 @@ public class library_BusinessFunctions {
 	public static ExtentHtmlReporter extent_HtmlReporter ;
 	public static ExtentReports extent_Reports;
 	public static ExtentTest extent_Test;
+	public static Robot objRobot;
+	public static JavascriptExecutor js;
 	
 	/*ExtentHtmlReporter    : responsible for look and feel of the report ,we can specify the report name , 
 	document title , theme of the report 
@@ -248,8 +253,23 @@ public class library_BusinessFunctions {
 	}
 
 	public static void ScrollDown(int Yaxis) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;// downcasting
+		 js = (JavascriptExecutor) driver;// downcasting
 		js.executeScript("window.scrollBy(0, "+Yaxis+")");
+	}
+	
+	public static void ScrollUP(int Yaxis) {
+		 js = (JavascriptExecutor) driver;// downcasting
+		js.executeScript("window.scrollBy(0, "+"-"+Yaxis+")");
+	}
+	
+	public static void ScrollRight(int Xaxis) {
+		 js = (JavascriptExecutor) driver;// downcasting
+		js.executeScript("window.scrollBy("+Xaxis+",0)");
+	}
+	
+	public static void ScrollLeft(int Xaxis) {
+		 js = (JavascriptExecutor) driver;// downcasting
+		js.executeScript("window.scrollBy("+"-"+Xaxis+",0)");
 	}
 	
 	public static void SelectValueFromDropDown(List<WebElement> AllDropDownFields, String DropDownValue) {
@@ -263,4 +283,17 @@ public class library_BusinessFunctions {
 		}
 		
 	}
+	
+	public static void PressEnterKey() {
+		try {
+			objRobot = new Robot();
+			objRobot.keyPress(KeyEvent.VK_ENTER);
+			objRobot.keyRelease(KeyEvent.VK_ENTER);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

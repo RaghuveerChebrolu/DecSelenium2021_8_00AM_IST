@@ -32,6 +32,7 @@ public class Orep {
 	public static final String DataDrivenHobbiesMovies = constants.ID+"&"+"checkbox2";
 	public static final String DataDrivenHobbiesHockey = constants.ID+"&"+"checkbox3";
 	public static final String DataDrivenLanguages = constants.ID+"&"+"msdd";
+	public static final String DataDrivenCloseIconLanguages = constants.xpath+"&"+"//span[@class='ui-icon ui-icon-close']";
 	public static final String DataDrivenAllLanguages = constants.xpath+"&"+"//div[@id='msdd']/following-sibling::div/ul/li/a";
 	public static final String DataDrivenSkillsField = constants.xpath+"&"+"//label[contains(text(),'Skills')]";
 	public static final String DataDrivenCountries = constants.ID+"&"+"countries";
@@ -42,9 +43,13 @@ public class Orep {
 	public static final String DataDriven_DOB_YY = constants.ID+"&"+"yearbox";
 	public static final String DataDriven_ALLYearsDOB_YY = constants.xpath+"&"+"//select[@id='yearbox']/option";
 	public static final String DataDriven_DOB_MM = constants.xpath+"&"+"//select[@placeholder='Month']";
-	public static final String DataDriven_ALLMonthsDOB_YY = constants.xpath+"&"+"//select[@placeholder='Month']/option";
+	public static final String DataDriven_ALLMonthsDOB_MM = constants.xpath+"&"+"//select[@placeholder='Month']/option";
 	public static final String DataDriven_DOB_DD = constants.xpath+"&"+"//select[@placeholder='Day']";
-	public static final String DataDriven_ALLDaysDOB_YY = constants.xpath+"&"+"//select[@placeholder='Day']/option";
+	public static final String DataDriven_ALLDaysDOB_DD = constants.xpath+"&"+"//select[@placeholder='Day']/option";
+	public static final String DataDriven_Pwd = constants.ID+"&"+"firstpassword";
+	public static final String DataDriven_ConfirmPWD = constants.ID+"&"+"secondpassword";
+	
+	
 	
 	
 	
