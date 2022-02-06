@@ -16,6 +16,9 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -294,6 +297,15 @@ public class library_BusinessFunctions {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public static void WriteToExcelFile(XSSFWorkbook objXSSFWorkBook, XSSFSheet objXSSFSheet, int rowNumber) {
+		objXSSFSheet=objXSSFWorkBook.getSheet(objProperties.getProperty("DaTaDrivenSheetName"));
+		XSSFCellStyle CellStyle = objXSSFWorkBook.createCellStyle();
+		// CellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+		System.out.println("Row Number in excel is :" + rowNumber);
+		objXSSFSheet.getRow(rowNumber).createCell(18).setCellValue("PASS");
+		objXSSFSheet.getRow(rowNumber).getCell(18).setCellStyle(CellStyle);
 	}
 	
 }

@@ -26,6 +26,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -195,7 +196,9 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 					library_BusinessFunctions.FindElement(Orep.DataDriven_ConfirmPWD).clear();
 					library_BusinessFunctions.FindElement(Orep.DataDriven_ConfirmPWD).sendKeys(testDataMap.get("confirm Password"));
 					
-					
+					FileOutputStream objFileOutput = new FileOutputStream(obj);
+					WriteToExcelFile(objXSSFWorkbook,objXSSFSheet,RowNumber);
+					objXSSFWorkbook.write(objFileOutput);
 				}else {
 					 int count = RowNumber+1;
 					System.out.println("RunMode in test data excel file is not marked as Yes for row number :"+count);
@@ -203,8 +206,8 @@ public class testNg5DataDriven extends library_BusinessFunctions {
 
 				
 			}
-			
-			
+			objXSSFWorkbook.close();
+			ObjFileInput.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
