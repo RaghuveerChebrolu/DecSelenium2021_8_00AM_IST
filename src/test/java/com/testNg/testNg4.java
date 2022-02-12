@@ -371,6 +371,51 @@ public class testNg4 extends library_BusinessFunctions {
 		Assert.assertTrue(fileFound, "Downloaded File Not Found");
 		obj_File.deleteOnExit();
 	}
+	
+	@Test(priority=10)
+	public void ValidateBrokenLinks(){
+		System.out.println("inside ValidateBrokenLinks");
+		extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
+		waitForPageToLoad();
+		driver.navigate().to(objProperties.getProperty("Links"));
+		waitForPageToLoad();
+		List<WebElement> All_links = library_BusinessFunctions.FindElements(Orep.AllLinks);
+		System.out.println("total links avaiable is:"+All_links.size());
+		for(int i=1 ; i<All_links.size();i++){
+			String IndividualLink =All_links.get(i).getAttribute("href");
+			System.out.println(IndividualLink);
+			try {
+				ValidatingLinks(IndividualLink);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(priority=11)
+	public void ValidateBrokenLinksGmoOnline(){
+		System.out.println("inside ValidateBrokenLinksGmoOnline");
+		extent_Test = extent_Reports.createTest(new Object() {}.getClass().getEnclosingMethod().getName());
+		waitForPageToLoad();
+		ValidateEnterGMoOnline();
+		waitForPageToLoad();
+		List<WebElement> All_links = library_BusinessFunctions.FindElements(Orep.AllLinks);
+		System.out.println("total links avaiable is:"+All_links.size());
+		for(int i=0 ; i<All_links.size();i++){
+			String IndividualLink =All_links.get(i).getAttribute("href");
+			System.out.println(IndividualLink);
+			try {
+				if(IndividualLink.startsWith("http")){
+				ValidatingLinks(IndividualLink);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 
 	@BeforeMethod
 	public void beforeMethod() {
